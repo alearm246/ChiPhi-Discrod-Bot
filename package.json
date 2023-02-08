@@ -1,0 +1,25 @@
+{
+  "name": "chiphi-discrod-bot",
+  "version": "1.0.0",
+  "description": "Discord bot for the Chi Phi Fraternity Discord server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": " nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alearm246/ChiPhi-Discrod-Bot.git"
+  },
+  "author": "Alejandro Armas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alearm246/ChiPhi-Discrod-Bot/issues"
+  },
+  "homepage": "https://github.com/alearm246/ChiPhi-Discrod-Bot#readme",
+  "dependencies": {
+    "discord.js": "^14.7.1",
+    "dotenv": "^16.0.3",
+    "nodemon": "^2.0.20"
+  }
+}
