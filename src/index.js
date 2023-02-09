@@ -36,6 +36,7 @@ for (const file of eventFiles) {
 	if (event.once) {
 		client.once(event.name, (...args) => event.execute(...args));
 	} else {
+        console.log("Event: ", event);
 		client.on(event.name, (...args) => event.execute(...args));
 	}
 }
