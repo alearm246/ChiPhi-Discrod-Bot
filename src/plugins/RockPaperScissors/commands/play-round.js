@@ -15,7 +15,7 @@ module.exports = {
 				)),
     async execute(interaction) {
         const computerChoices = ["rock", "paper", "scissor"];
-        const computerChoice = computerChoices[Math.floor(Math.random() * computerChoices.length - 1)];
+        const computerChoice = computerChoices[Math.floor(Math.random() * (computerChoices.length - 1))];
         const userChoice = interaction.options.getString("rock-paper-scissors");
         if (computerChoice === "rock" && userChoice === "paper") {
             await interaction.reply("Nice job! You won!");

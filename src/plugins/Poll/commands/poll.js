@@ -33,11 +33,11 @@ module.exports = {
             .addComponents(
                 new ButtonBuilder()
                     .setLabel(leftButtonText)
-                    .setCustomId(`Poll-Yes-${replyObject.id}`)
+                    .setCustomId(`poll-yes-${replyObject.id}`)
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setLabel(rightButtonText)
-                    .setCustomId(`Poll-No-${replyObject.id}`)
+                    .setCustomId(`poll-no-${replyObject.id}`)
                     .setStyle(ButtonStyle.Danger)    
             );
         await interaction.editReply({ components: [pollButtons] });

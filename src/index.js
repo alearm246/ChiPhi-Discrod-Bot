@@ -1,5 +1,6 @@
 const fs = require('node:fs');
 const path = require('node:path');
+const plugins = require("./plugins");
 require("dotenv").config();
 const { Client, Events, GatewayIntentBits, Collection } = require('discord.js');
 
@@ -11,19 +12,33 @@ const client = new Client({ intents: [
 });
 
 client.commands = new Collection();
+client.buttons = new Collection();
 
 //commands
-const commandsPath = path.join(__dirname + "/commands");
-const commandsFile = fs.readdirSync(commandsPath).filter(file => file.endsWith(".js"));
+for (const plugin of plugins) {
+    const { commands } = plugin;
+    for (const command of commands) {
+        if ('data' in command && 'execute' in command) {
+            client.commands.set(command.data.name, command);
+        } else {
+            console.log(`[WARNING] The command named ${command.data.name} is missing a required "data" or "execute" property.`);
+        }  
+    }
+}
 
-for (const file of commandsFile) {
-    const filePath = path.join(commandsPath, file);
-    const command = require(filePath);
-    if ('data' in command && 'execute' in command) {
-		client.commands.set(command.data.name, command);
-	} else {
-		console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
-	}
+//components
+for (const plugin of plugins) {
+    const { components } = plugin;
+    for (const component in components) {
+        const widgets = components[component];
+        if (widgets.length !== 0) {
+            for (const widget of widgets) {
+                if (widget.data) {
+                    client[component].set(widget.data.name, widget);
+                }
+            }
+        }
+    }
 }
 
 //events
@@ -36,7 +51,6 @@ for (const file of eventFiles) {
 	if (event.once) {
 		client.once(event.name, (...args) => event.execute(...args));
 	} else {
-        console.log("Event: ", event);
 		client.on(event.name, (...args) => event.execute(...args));
 	}
 }
