@@ -14,9 +14,9 @@ for (const plugin of plugins) {
 }
 
 // Construct and prepare an instance of the REST module
-console.log("TOKEN: ", process.env.TOKEN)
-console.log("GUILD_ID: ", process.env.GUILD_ID);
-console.log("BOT_ID", process.env.BOT_ID);
+console.log(`TOKEN: ${process.env.TOKEN} is of type ${typeof process.env.TOKEN}`);
+console.log(`GUILD_ID: ${process.env.GUILD_ID} is of type ${typeof process.env.GUILD_ID}`);
+console.log(`BOT_ID: ${process.env.BOT_ID} is of type ${typeof process.env.BOT_ID}`);
 const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
 
 // and deploy your commands!
