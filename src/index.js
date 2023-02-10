@@ -14,6 +14,8 @@ const client = new Client({ intents: [
 client.commands = new Collection();
 client.buttons = new Collection();
 
+require("./deploy-commands");
+
 //commands
 for (const plugin of plugins) {
     const { commands } = plugin;
