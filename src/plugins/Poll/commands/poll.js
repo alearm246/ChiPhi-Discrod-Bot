@@ -27,7 +27,7 @@ module.exports = {
                 { name: `${leftButtonText}'s`, value: "0", inline: true },
                 { name: `${rightButtonText}'s`, value: "0", inline: true }
             ])
-            .setColor("Random")
+            .setColor("#E71D14")
         const replyObject = await interaction.reply({ embeds: [pollEmbed], fetchReply: true });
         const pollButtons = new ActionRowBuilder()
             .addComponents(
