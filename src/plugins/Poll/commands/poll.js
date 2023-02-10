@@ -18,28 +18,32 @@ module.exports = {
             .setDescription("Text for the right button")
             .setRequired(true)),
     async execute(interaction) {
-        const pollQuestion = interaction.options.getString("question");
-        const leftButtonText = interaction.options.getString("left-button");
-        const rightButtonText = interaction.options.getString("right-button");
-        const pollEmbed = new EmbedBuilder()
-            .setDescription("**Question:**\n" + pollQuestion)
-            .addFields([
-                { name: `${leftButtonText}'s`, value: "0", inline: true },
-                { name: `${rightButtonText}'s`, value: "0", inline: true }
-            ])
-            .setColor("#E71D14")
-        const replyObject = await interaction.reply({ embeds: [pollEmbed], fetchReply: true });
-        const pollButtons = new ActionRowBuilder()
-            .addComponents(
-                new ButtonBuilder()
-                    .setLabel(leftButtonText)
-                    .setCustomId(`poll-yes-${replyObject.id}`)
-                    .setStyle(ButtonStyle.Success),
-                new ButtonBuilder()
-                    .setLabel(rightButtonText)
-                    .setCustomId(`poll-no-${replyObject.id}`)
-                    .setStyle(ButtonStyle.Danger)    
-            );
-        await interaction.editReply({ components: [pollButtons] });
+        try {
+            const pollQuestion = interaction.options.getString("question");
+            const leftButtonText = interaction.options.getString("left-button");
+            const rightButtonText = interaction.options.getString("right-button");
+            const pollEmbed = new EmbedBuilder()
+                .setDescription("**Question:**\n" + pollQuestion)
+                .addFields([
+                    { name: `${leftButtonText}'s`, value: "0", inline: true },
+                    { name: `${rightButtonText}'s`, value: "0", inline: true }
+                ])
+                .setColor("#E71D14")
+            const replyObject = await interaction.reply({ embeds: [pollEmbed], fetchReply: true });
+            const pollButtons = new ActionRowBuilder()
+                .addComponents(
+                    new ButtonBuilder()
+                        .setLabel(leftButtonText)
+                        .setCustomId(`poll-yes-${replyObject.id}`)
+                        .setStyle(ButtonStyle.Success),
+                    new ButtonBuilder()
+                        .setLabel(rightButtonText)
+                        .setCustomId(`poll-no-${replyObject.id}`)
+                        .setStyle(ButtonStyle.Danger)    
+                );
+            await interaction.editReply({ components: [pollButtons] });
+        } catch(err) {
+            console.error(err);
+        }  
     }
 }

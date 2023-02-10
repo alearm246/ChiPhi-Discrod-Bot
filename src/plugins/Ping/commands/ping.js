@@ -6,6 +6,10 @@ module.exports = {
         .setName("ping")
         .setDescription("Replies with Pong!"),
     async execute(interaction) {
-        await interaction.reply(`Bot Ping: ${interaction.client.ws.ping}ms`)
+        try {
+            await interaction.reply(`Bot Ping: ${interaction.client.ws.ping}ms`)
+        } catch(err) {
+            console.error(err);
+        }
     }
 }
