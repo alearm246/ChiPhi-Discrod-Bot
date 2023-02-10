@@ -16,7 +16,7 @@ for (const plugin of plugins) {
 }
 
 // Construct and prepare an instance of the REST module
-const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
+const rest = new REST({ version: '10' }).setToken(creds.TOKEN);
 
 // and deploy your commands!
 (async () => {
