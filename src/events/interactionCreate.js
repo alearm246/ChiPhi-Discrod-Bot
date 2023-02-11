@@ -1,6 +1,5 @@
 const { Events } = require("discord.js");
 
-const votedMembers = new Set();
 module.exports = {
     name: Events.InteractionCreate,
 	async execute(interaction) {
