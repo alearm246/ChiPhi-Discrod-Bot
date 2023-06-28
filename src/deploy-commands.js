@@ -1,18 +1,21 @@
 const { REST, Routes } = require('discord.js');
 const fs = require('node:fs');
 const path = require('node:path');
-const plugins = require("./plugins");
 require("dotenv").config();
 
 const commands = [];
+const commandsPath = path.join(__dirname, "commands"); 
+const commandFolders = fs.readdirSync(commandsPath);
 
-for (const plugin of plugins) {
-    const { commands: innerCommands } = plugin;
-    for (const command of innerCommands) {
-       commands.push(command.data.toJSON());
-    }
+for (const folder of commandFolders) {
+	const commandFolderPath = path.join(commandsPath, folder);
+	const commandFiles = fs.readdirSync(commandFolderPath);
+	for (const file of commandFiles) {
+		const commandPath = path.join(commandFolderPath, file);
+		const command = require(commandPath);
+		commands.push(command.data.toJSON());
+	}
 }
-
 // Construct and prepare an instance of the REST module
 const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
 

@@ -40,7 +40,8 @@ const quotes = {
 
 function getRandomQuote(houseRep) {
     const repQuotes = quotes[houseRep];
-    return repQuotes[Math.floor(Math.random() * (repQuotes.length - 1))];
+    const randomQuote = repQuotes[Math.floor(Math.random() * (repQuotes.length - 1))];
+    return randomQuote;
 }
 
 module.exports = {
@@ -58,56 +59,53 @@ module.exports = {
                     { name: HOUSE_REP.winston, value: HOUSE_REP.winston}
 				)),
     async execute(interaction) {
-        try {
-            const houseRep = interaction.options.getString("house-representative-name");
-            switch (houseRep) {
-                case HOUSE_REP.mezes:
-                    await interaction.deferReply();
-                    const mezesAttachment = new AttachmentBuilder("./src/assets/sidney-mezes.jpg");
-                    const mezesEmbed = new EmbedBuilder()
-                        .setTitle(HOUSE_REP.mezes)
-                        .setAuthor({ name: HOUSE_REP.mezes, iconURL: "attachment://sidney-mezes.jpg" })
-                        .setThumbnail("attachment://sidney-mezes.jpg")
-                        .addFields( { name: "Mezes Quote", value: getRandomQuote(HOUSE_REP.mezes)})
-                        .setImage("attachment://sidney-mezes.jpg")
-                    await interaction.editReply({ embeds: [mezesEmbed], files: [mezesAttachment]});
-                    break;
-                case HOUSE_REP.cronkite:
-                    await interaction.deferReply();
-                    const cronkiteAttachment = new AttachmentBuilder("./src/assets/walter-cronkite.jpg");
-                    const cronkiteEmbed = new EmbedBuilder()
-                        .setTitle(HOUSE_REP.cronkite)
-                        .setAuthor({ name: HOUSE_REP.cronkite, iconURL: "attachment://walter-cronkite.jpg" })
-                        .setThumbnail("attachment://walter-cronkite.jpg")
-                        .addFields( { name: "Cronkite Quote", value: getRandomQuote(HOUSE_REP.cronkite)})
-                        .setImage("attachment://walter-cronkite.jpg")
-                    await interaction.editReply({ embeds: [cronkiteEmbed], files: [cronkiteAttachment]});
-                    break;
-                case HOUSE_REP.briscoe:
-                    await interaction.deferReply();
-                    const briscoeAttachment = new AttachmentBuilder("./src/assets/dolph-briscoe.jpg");
-                    const briscoeEmbed = new EmbedBuilder()
-                        .setTitle(HOUSE_REP.briscoe)
-                        .setAuthor({ name: HOUSE_REP.briscoe, iconURL: "attachment://dolph-briscoe.jpg" })
-                        .setThumbnail("attachment://dolph-briscoe.jpg")
-                        .addFields( { name: "Briscoe Quote", value: getRandomQuote(HOUSE_REP.briscoe)})
-                        .setImage("attachment://dolph-briscoe.jpg")
-                    await interaction.editReply({ embeds: [briscoeEmbed], files: [briscoeAttachment]});
-                    break;
-                case HOUSE_REP.winston:
-                    await interaction.deferReply();
-                    const winstonAttachment = new AttachmentBuilder("./src/assets/george-winston.jpg");
-                    const winstonEmbed = new EmbedBuilder()
-                        .setTitle(HOUSE_REP.winston)
-                        .setAuthor({ name: HOUSE_REP.winston, iconURL: "attachment://george-winston.jpg" })
-                        .setThumbnail("attachment://george-winston.jpg")
-                        .addFields( { name: "Winston Quote", value: getRandomQuote(HOUSE_REP.winston)})
-                        .setImage("attachment://george-winston.jpg")
-                    await interaction.editReply({ embeds: [winstonEmbed], files: [winstonAttachment]});
-                    break;
-            }
-        } catch(err) {
-            console.error(err);
+        const houseRep = interaction.options.getString("house-representative-name");
+        switch (houseRep) {
+            case HOUSE_REP.mezes:
+                //C:\Users\alear\personal_projects\assets\sidney-mezes.jpg
+                const mezesAttachment = new AttachmentBuilder("./src/assets/sidney-mezes.jpg");
+                const mezesEmbed = new EmbedBuilder()
+                    .setTitle(HOUSE_REP.mezes)
+                    .setAuthor({ name: HOUSE_REP.mezes, iconURL: "attachment://sidney-mezes.jpg" })
+                    .setThumbnail("attachment://sidney-mezes.jpg")
+                    .addFields( { name: "Mezes Quote", value: getRandomQuote(HOUSE_REP.mezes)})
+                    .setImage("attachment://sidney-mezes.jpg")
+                    .setColor("#E71D14")
+                await interaction.reply({ embeds: [mezesEmbed], files: [mezesAttachment]});
+                break;
+            case HOUSE_REP.cronkite:
+                const cronkiteAttachment = new AttachmentBuilder("./src/assets/walter-cronkite.jpg");
+                const cronkiteEmbed = new EmbedBuilder()
+                    .setTitle(HOUSE_REP.cronkite)
+                    .setAuthor({ name: HOUSE_REP.cronkite, iconURL: "attachment://walter-cronkite.jpg" })
+                    .setThumbnail("attachment://walter-cronkite.jpg")
+                    .addFields( { name: "Cronkite Quote", value: getRandomQuote(HOUSE_REP.cronkite)})
+                    .setImage("attachment://walter-cronkite.jpg")
+                    .setColor("#E71D14")
+                await interaction.reply({ embeds: [cronkiteEmbed], files: [cronkiteAttachment]});
+                break;
+            case HOUSE_REP.briscoe:
+                const briscoeAttachment = new AttachmentBuilder("./src/assets/dolph-briscoe.jpg");
+                const briscoeEmbed = new EmbedBuilder()
+                    .setTitle(HOUSE_REP.briscoe)
+                    .setAuthor({ name: HOUSE_REP.briscoe, iconURL: "attachment://dolph-briscoe.jpg" })
+                    .setThumbnail("attachment://dolph-briscoe.jpg")
+                    .addFields( { name: "Briscoe Quote", value: getRandomQuote(HOUSE_REP.briscoe)})
+                    .setImage("attachment://dolph-briscoe.jpg")
+                    .setColor("#E71D14")
+                await interaction.reply({ embeds: [briscoeEmbed], files: [briscoeAttachment]});
+                break;
+            case HOUSE_REP.winston:
+                const winstonAttachment = new AttachmentBuilder("./src/assets/george-winston.jpg");
+                const winstonEmbed = new EmbedBuilder()
+                    .setTitle(HOUSE_REP.winston)
+                    .setAuthor({ name: HOUSE_REP.winston, iconURL: "attachment://george-winston.jpg" })
+                    .setThumbnail("attachment://george-winston.jpg")
+                    .addFields( { name: "Winston Quote", value: getRandomQuote(HOUSE_REP.winston)})
+                    .setImage("attachment://george-winston.jpg")
+                    .setColor("#E71D14")
+                await interaction.reply({ embeds: [winstonEmbed], files: [winstonAttachment]});
+                break;
         }
     }
 }
