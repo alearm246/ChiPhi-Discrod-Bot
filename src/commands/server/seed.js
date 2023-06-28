@@ -7,6 +7,10 @@ module.exports = {
         .setDescription("seeds the users table with all the members of the discord server"),
     async execute(interaction) {
         try {
+            if (interaction.user.id != process.env.DEVELOPER) {
+                await interaction.reply("You do not have the authorization to run this command");
+            }
+
             const usersToInsert = [];
             const members = await interaction.guild.members.fetch();
 
@@ -14,9 +18,7 @@ module.exports = {
                 const { user } = val;
                 if (!user.bot) {
                     const userExists = await knex("users").where("id", user.id).select("id").first();
-                    console.log("user outside if: ", user.username);
                     if (!userExists) {
-                        console.log("user inside if: ", user.username);
                         usersToInsert.push({
                             id: user.id,
                             username: user.username,
