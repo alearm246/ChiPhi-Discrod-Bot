@@ -9,8 +9,8 @@ exports.up = function(knex) {
         table.text("id").primary().notNullable().unique();
         table.text("username").unique().notNullable();
         table.text("email").unique();
-        table.integer("silver_crest").notNullable().unique();
-        table.integer("golden_crest").notNullable().unique();
+        table.integer("silver_crest").notNullable();
+        table.integer("golden_crest").notNullable();
         table.timestamp("created_at").defaultTo(knex.fn.now());
         table.timestamp("updated_at").defaultTo(knex.fn.now());
     });
