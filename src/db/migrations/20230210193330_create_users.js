@@ -6,7 +6,7 @@ const { table } = require("console");
  */
 exports.up = function(knex) {
     return knex.schema.createTable("users", (table) => {
-        table.uuid("id").primary().notNullable().unique();
+        table.text("id").primary().notNullable().unique();
         table.text("username").unique().notNullable();
         table.text("email").unique();
         table.integer("silver_crest").notNullable().unique();
