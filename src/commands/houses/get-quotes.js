@@ -39,11 +39,8 @@ const quotes = {
 }
 
 function getRandomQuote(houseRep) {
-    console.log("rep: ", houseRep);
     const repQuotes = quotes[houseRep];
-    console.log("quotes: ", repQuotes);
     const randomQuote = repQuotes[Math.floor(Math.random() * (repQuotes.length - 1))];
-    console.log("random quote: ", randomQuote);
     return randomQuote;
 }
 

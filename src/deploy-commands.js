@@ -13,7 +13,6 @@ for (const folder of commandFolders) {
 	for (const file of commandFiles) {
 		const commandPath = path.join(commandFolderPath, file);
 		const command = require(commandPath);
-		console.log("name: ", command.data.name);
 		commands.push(command.data.toJSON());
 	}
 }
