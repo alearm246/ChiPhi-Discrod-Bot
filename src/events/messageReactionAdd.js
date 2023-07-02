@@ -1,9 +1,10 @@
 const { Events } = require("discord.js");
+const crestsOnReactionAdd = require("../plugins/crests/events/crestsOnReactionAdd.js");
 require("dotenv").config();
 
 module.exports = {
 	name: Events.MessageReactionAdd,
 	async execute(messageReaction, user) {
-		console.log(`A message has been reacted to!`);
+        crestsOnReactionAdd.execute(messageReaction, user);
 	},
 };

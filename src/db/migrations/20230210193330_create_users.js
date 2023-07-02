@@ -11,6 +11,8 @@ exports.up = function(knex) {
         table.text("email").unique();
         table.integer("silver_crest").notNullable();
         table.integer("golden_crest").notNullable();
+        table.timestamp("last_silver_crest");
+        table.timestamp("last_golden_crest");
         table.timestamp("created_at").defaultTo(knex.fn.now());
         table.timestamp("updated_at").defaultTo(knex.fn.now());
     });

@@ -18,8 +18,8 @@ const client = new Client({ intents: [
 client.commands = new Collection();
 client.buttons = new Collection();
 
-require("./deploy-commands");
 eventHandler(client);
 commandHandler(client);
+require("./deploy-commands");
 
 client.login(process.env.TOKEN);
