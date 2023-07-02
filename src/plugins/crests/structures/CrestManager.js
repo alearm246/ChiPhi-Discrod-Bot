@@ -3,37 +3,49 @@ const knex = require("../../../db/db.js");
 class CrestManager {
     constructor() {
         this.silverCrestCoolDown = 1000 * 60 * 2;
+        this.goldCrestCoolDown = 1000 * 60 * 60 * 24;
     }
 
-    async addSilverCrest(reaction, user, ammount) {
+    async addCrest(typeOfCrest, reaction, user, ammount) {
         const { message, emoji } = reaction;
         await knex("user_message_reactions").insert({
             user_id: message.author.id,
             message_id: message.id,
             reaction_id: emoji.name
         })
-        const prevSilverCrestPoints = await knex("users").where("id", message.author.id).select("silver_crest").first();
+        const prevCrests = await knex("users").where("id", message.author.id).select(typeOfCrest).first();
         await knex("users").where("id", message.author.id).update({
-            silver_crest: prevSilverCrestPoints.silver_crest + ammount
+            [typeOfCrest]: prevCrests[typeOfCrest] + ammount
         });
+        const lastCrestSent = "last_" + typeOfCrest
         await knex("users").where("id", user.id).update({
-            last_silver_crest: knex.fn.now()
+            [lastCrestSent]: knex.fn.now()
         })
     }
 
-    async isSilverCrestCoolDownExpired(userId) {
+    async isCrestCoolDownExpired(typeOfCrest, userId) {
         const sender = await knex("users").where("id", userId).select().first();
-        const { last_silver_crest } = sender;
-        if (last_silver_crest === null) {
+        const lastCrestSent = "last_" + typeOfCrest;
+        if (sender[lastCrestSent] === null) {
             return true;
         }
-        const diffInTime = Date.now() - new Date(last_silver_crest);
-        return diffInTime >= this.silverCrestCoolDown;
+        const diffInTime = Date.now() - new Date(sender[lastCrestSent]);
+        if (typeOfCrest === "silver_crest") {
+            return diffInTime >= this.silverCrestCoolDown;
+        } else {
+            return diffInTime >= this.goldCrestCoolDown;
+        }
     }
 
-    async getRemainingTimeToSendSilverCrest(userId) {
+    async getRemaningTimeToSendCrest(typeOfCrest, userId) {
         const sender = await knex("users").where("id", userId).select().first();
-        return this.silverCrestCoolDown - (Date.now() - new Date(sender.last_silver_crest));
+        const lastCrestSent = "last_" + typeOfCrest;
+        const elapsedTime = Date.now() - new Date(sender[lastCrestSent])
+        if (typeOfCrest === "silver_crest") {
+            return this.silverCrestCoolDown - elapsedTime;
+        } else {
+            return this.goldCrestCoolDown- elapsedTime;
+        }
     }
 
     async hasUserGivenCrestToMessage(reaction, recieverId) {
@@ -43,6 +55,14 @@ class CrestManager {
                                                                 .select("message_id");
         const messageIds = messageIdObjs.map(msgIdObj => msgIdObj.message_id);
         return messageIds.includes(message.id);
+    }
+
+    getTypeOfCrest(emoji) {
+        if (emoji === "😎") {
+            return "silver_crest";
+        } else if (emoji === "😏") {
+            return "golden_crest";
+        }
     }
 }
 
