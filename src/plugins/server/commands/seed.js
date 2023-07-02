@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require("discord.js");
-const knex = require("../../db/db.js");
+const knex = require("../../../db/db.js");
 
 module.exports = {
     data: new SlashCommandBuilder()
