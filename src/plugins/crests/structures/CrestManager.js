@@ -64,6 +64,24 @@ class CrestManager {
             return "golden_crest";
         }
     }
+
+    getLeaderBoard(sortedSilverCrests, sortedGoldenCrests) {
+        let silverCrestRanks = this.formatLeaderBoard(sortedSilverCrests, "silver_crest");
+        let goldenCrestRanks = this.formatLeaderBoard(sortedGoldenCrests, "golden_crest");
+        return { silverCrestRanks, goldenCrestRanks };
+    }
+
+    formatLeaderBoard(sortedCrests, typeOfCrest) {
+        let crestRanks = "";
+        let rank = 1;
+
+        for (const crest of sortedCrests) {
+            crestRanks += `**${rank}) ${crest.username}: ${crest[typeOfCrest]} \n`
+            rank += 1;
+        }
+
+        return crestRanks;
+    }
 }
 
 module.exports = new CrestManager();
